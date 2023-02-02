@@ -6492,6 +6492,11 @@ makeerror@1.0.12:
   dependencies:
     tmpl "1.0.5"
 
+mantine-datatable@^1.7.38:
+  version "1.7.38"
+  resolved "https://registry.yarnpkg.com/mantine-datatable/-/mantine-datatable-1.7.38.tgz#d6eff13da96ef132c9477b372301b51fd2ee80b5"
+  integrity sha512-RIORKWmrXSVejcb84LtFojF72TGYj5z2hbu85Kzn210AiazizcwYGq/Yh9nOwtW5y/2uW0qZ4iukHUTVFeAWyQ==
+
 mdn-data@2.0.14:
   version "2.0.14"
   resolved "https://registry.yarnpkg.com/mdn-data/-/mdn-data-2.0.14.tgz#7113fc4281917d63ce29b43446f701e68c25ba50"

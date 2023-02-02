@@ -10,7 +10,7 @@ import {
 
 import { useForm } from "@mantine/form";
 
-import { Autocomplete } from "@mantine/core";
+import { ORGANIZATIONS, PROFESSION } from "../../constants/constants";
 
 function EmployeeSearchForm(props: any) {
   const form: any = useForm({
@@ -34,20 +34,17 @@ function EmployeeSearchForm(props: any) {
 
           <Divider />
 
-          <Autocomplete
-            label="Organization"
+          <Select
+            label="Organizations"
             placeholder="Organization"
+            data={ORGANIZATIONS}
             {...form.getInputProps("organization")}
-            data={["React", "Angular", "Svelte", "Vue"]}
           />
 
           <Select
-            label="Profession"
+            label="Professions"
             placeholder="Profession"
-            data={[
-              { value: "project%20manager", label: "Project Manager" },
-              { value: "Software%20Engineer", label: "Software Engineer" },
-            ]}
+            data={PROFESSION}
             {...form.getInputProps("profession")}
           />
         </Stack>
