@@ -1,16 +1,7 @@
 import { Image, Text } from "@mantine/core";
 import { DataTable } from "mantine-datatable";
-import { useState, useEffect } from "react";
 
 function EmployeeList(props: any) {
-  const [page, setPage] = useState(1);
-
-  useEffect(() => {
-    props.handleEmployeePageChange(
-      (page - 1) * props.employeesData?.pagination?.count
-    );
-  }, [page]);
-
   return (
     <>
       <DataTable
@@ -38,8 +29,8 @@ function EmployeeList(props: any) {
           },
         ]}
         records={props?.employeesData?.employees}
-        page={page}
-        onPageChange={(p) => setPage(p)}
+        page={props?.page}
+        onPageChange={props?.onPageChange}
         recordsPerPage={props.employeesData?.pagination?.count}
         totalRecords={props.employeesData?.pagination?.total}
       />

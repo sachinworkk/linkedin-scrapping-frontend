@@ -7,7 +7,6 @@ import {
   Button,
   Stack,
 } from "@mantine/core";
-
 import { useForm } from "@mantine/form";
 
 import { ORGANIZATIONS, PROFESSION } from "../../constants/constants";

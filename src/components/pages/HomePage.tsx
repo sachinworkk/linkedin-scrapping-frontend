@@ -1,21 +1,30 @@
-import { Grid } from "@mantine/core";
-import { searchEmployeeList } from "../../services/employeeService";
-import EmployeeSearchForm from "../homepage/EmployeeSearhForm";
-
-import { getToken } from "../../utils/localStorage";
 import { useState } from "react";
 
+import { Grid } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 
 import EmployeeList from "../homepage/EmployeeList";
+import EmployeeSearchForm from "../homepage/EmployeeSearhForm";
+
+import { getToken } from "../../utils/localStorage";
+
+import { searchEmployeeList } from "../../services/employeeService";
 
 function HomePage() {
+  const [page, setPage] = useState(1);
+
   const [employeesData, setEmployeeData] = useState({
     employees: [],
-    pagination: {},
+    pagination: {
+      count: 0,
+    },
   });
-
   const [employeeSearchParams, setEmployeeSearch] = useState({});
+
+  const onPageChange = (page: number) => {
+    setPage(page);
+    handlePageChange((page - 1) * employeesData?.pagination?.count);
+  };
 
   const handleEmployeeSearch = async (employeeSearch: object) => {
     setEmployeeSearch(employeeSearch);
@@ -31,6 +40,7 @@ function HomePage() {
       const resp = await searchEmployeeList(payload);
 
       setEmployeeData(resp.data);
+      setPage(1);
     } catch (e: any) {
       showNotification({
         color: "red",
@@ -40,7 +50,7 @@ function HomePage() {
     }
   };
 
-  const handlePageChange = async (pageNumber: string) => {
+  const handlePageChange = async (pageNumber: number) => {
     const payload = {
       ...employeeSearchParams,
       pageNumber,
@@ -70,6 +80,8 @@ function HomePage() {
 
         <Grid.Col span={8}>
           <EmployeeList
+            page={page}
+            onPageChange={onPageChange}
             employeesData={employeesData}
             handleEmployeePageChange={handlePageChange}
           />

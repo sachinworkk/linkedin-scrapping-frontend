@@ -1,10 +1,11 @@
-import { Center } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
-import * as routes from "../../routes/routes";
 
+import { Center } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 
 import LoginForm from "../login/LoginForm";
+
+import * as routes from "../../routes/routes";
 
 import { saveToken } from "../../utils/localStorage";
 
