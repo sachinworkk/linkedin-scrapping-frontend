@@ -73,12 +73,12 @@ function HomePage() {
 
   return (
     <>
-      <Grid p={16}>
-        <Grid.Col span={4}>
+      <Grid mt={12}>
+        <Grid.Col span={2}>
           <EmployeeSearchForm onEmployeeSearch={handleEmployeeSearch} />
         </Grid.Col>
 
-        <Grid.Col span={8}>
+        <Grid.Col span={10}>
           <EmployeeList
             page={page}
             onPageChange={onPageChange}
