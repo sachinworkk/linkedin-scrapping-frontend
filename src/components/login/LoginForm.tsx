@@ -58,7 +58,9 @@ function LoginForm(props: any) {
         </Stack>
 
         <Group position="apart" mt="xl">
-          <Button type="submit">Login</Button>
+          <Button type="submit" loading={props?.isLoggingIn}>
+            Login
+          </Button>
         </Group>
       </form>
     </Paper>

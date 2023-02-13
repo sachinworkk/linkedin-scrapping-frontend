@@ -1,32 +1,32 @@
-import { Image, Text } from "@mantine/core";
+import { Flex, Image } from "@mantine/core";
 import { DataTable } from "mantine-datatable";
 
 function EmployeeList(props: any) {
   return (
     <>
       <DataTable
+        fetching={props?.isListLoading}
         columns={[
-          { accessor: "name", title: "Name" },
-          { accessor: "profession", title: "Profession" },
-          { accessor: "location", title: "Location" },
           {
-            accessor: "imageURL",
-            title: "Image",
+            accessor: "name",
+            title: "Name",
             // @ts-ignore
-            render: ({ imageURL }) => (
-              <Image
-                width={30}
-                height={30}
-                fit="contain"
-                src={imageURL}
-                placeholder={
-                  <Text align="center">
-                    This image contained the meaning of life
-                  </Text>
-                }
-              />
+            render: ({ name, imageURL }) => (
+              <Flex gap={6}>
+                <Image
+                  width={30}
+                  height={30}
+                  fit="contain"
+                  src={imageURL}
+                  withPlaceholder
+                />
+
+                <span>{name}</span>
+              </Flex>
             ),
           },
+          { accessor: "profession", title: "Profession" },
+          { accessor: "location", title: "Location" },
         ]}
         records={props?.employeesData?.employees}
         page={props?.page}

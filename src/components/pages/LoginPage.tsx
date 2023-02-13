@@ -10,11 +10,16 @@ import * as routes from "../../routes/routes";
 import { saveToken } from "../../utils/localStorage";
 
 import { loginUser } from "../../services/userService";
+import { useState } from "react";
 
 function LoginPage() {
   const navigate = useNavigate();
 
+  const [isUserLoggingIn, setIsUserLoggingIn] = useState(false);
+
   const handleLogin = async (loginInfo: object) => {
+    setIsUserLoggingIn(true);
+
     try {
       const resp: any = await loginUser(loginInfo);
 
@@ -30,13 +35,18 @@ function LoginPage() {
         title: "Error",
         message: e.message,
       });
+    } finally {
+      setIsUserLoggingIn(false);
     }
   };
 
   return (
     <>
       <Center>
-        <LoginForm onLoginFormSubmit={handleLogin} />
+        <LoginForm
+          onLoginFormSubmit={handleLogin}
+          isLoggingIn={isUserLoggingIn}
+        />
       </Center>
     </>
   );

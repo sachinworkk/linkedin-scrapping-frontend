@@ -12,6 +12,7 @@ import { searchEmployeeList } from "../../services/employeeService";
 
 function HomePage() {
   const [page, setPage] = useState(1);
+  const [isEmployeeListLoading, setEmployeeListLoading] = useState(false);
 
   const [employeesData, setEmployeeData] = useState({
     employees: [],
@@ -36,6 +37,7 @@ function HomePage() {
       jSessionId: getToken("linkedInScrappingJSessionId"),
     };
 
+    setEmployeeListLoading(true);
     try {
       const resp = await searchEmployeeList(payload);
 
@@ -47,6 +49,8 @@ function HomePage() {
         title: "Error",
         message: e.message,
       });
+    } finally {
+      setEmployeeListLoading(false);
     }
   };
 
@@ -58,6 +62,7 @@ function HomePage() {
       jSessionId: getToken("linkedInScrappingJSessionId"),
     };
 
+    setEmployeeListLoading(true);
     try {
       const resp = await searchEmployeeList(payload);
 
@@ -68,6 +73,8 @@ function HomePage() {
         title: "Error",
         message: e.message,
       });
+    } finally {
+      setEmployeeListLoading(false);
     }
   };
 
@@ -83,6 +90,7 @@ function HomePage() {
             page={page}
             onPageChange={onPageChange}
             employeesData={employeesData}
+            isListLoading={isEmployeeListLoading}
             handleEmployeePageChange={handlePageChange}
           />
         </Grid.Col>

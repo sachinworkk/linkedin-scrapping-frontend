@@ -1,8 +1,10 @@
 import { Grid } from "@mantine/core";
+
 import { Navigate, Outlet } from "react-router-dom";
 
-import HomePageNavbar from "../components/commons/HomePageNavbar";
 import { getToken } from "../utils/localStorage";
+
+import HomePageNavbar from "../components/commons/HomePageNavbar";
 
 const HomeLayout = () => {
   return Boolean(getToken("linkedInScrappingLiAt")) &&

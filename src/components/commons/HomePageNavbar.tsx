@@ -1,6 +1,13 @@
-import { Navbar, createStyles } from "@mantine/core";
+import { showNotification } from "@mantine/notifications";
+import { Navbar, createStyles, Tooltip } from "@mantine/core";
+
+import { useNavigate } from "react-router-dom";
 
 import { Logout } from "tabler-icons-react";
+
+import { saveToken } from "../../utils/localStorage";
+
+import { logoutUser } from "../../services/userService";
 
 const useStyles = createStyles((theme, _params, getRef) => {
   const icon = getRef("icon");
@@ -37,16 +44,35 @@ const useStyles = createStyles((theme, _params, getRef) => {
 function HomePageNavbar() {
   const { classes } = useStyles();
 
+  const navigate = useNavigate();
+
+  const onSignOutUser = async (event: any) => {
+    event.preventDefault();
+
+    try {
+      // await logoutUser();
+
+      saveToken("", "linkedInScrappingLiAt");
+      saveToken("", "linkedInScrappingJSessionId");
+
+      navigate("/login");
+    } catch (e: any) {
+      showNotification({
+        color: "red",
+        title: "Error",
+        message: e.message,
+      });
+    }
+  };
+
   return (
     <Navbar width={{ sm: 100 }} p="md">
       <Navbar.Section grow>
-        <a
-          href="#"
-          className={classes.link}
-          onClick={(event) => event.preventDefault()}
-        >
-          <Logout />
-        </a>
+        <Tooltip label="Logout">
+          <a href="#" className={classes.link} onClick={onSignOutUser}>
+            <Logout />
+          </a>
+        </Tooltip>
       </Navbar.Section>
     </Navbar>
   );

@@ -4,6 +4,6 @@ export const loginUser = async (payload: object) => {
   return http.post("/login", payload);
 };
 
-export const logoutUser = async (payload: object) => {
-  return http.delete("/logout", payload);
+export const logoutUser = async () => {
+  return http.delete("/logout");
 };
