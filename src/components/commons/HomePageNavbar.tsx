@@ -50,7 +50,7 @@ function HomePageNavbar() {
     event.preventDefault();
 
     try {
-      // await logoutUser();
+      await logoutUser();
 
       saveToken("", "linkedInScrappingLiAt");
       saveToken("", "linkedInScrappingJSessionId");

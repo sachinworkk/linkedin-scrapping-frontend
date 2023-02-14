@@ -42,7 +42,7 @@ function LoginPage() {
 
   return (
     <>
-      <Center>
+      <Center mt={100}>
         <LoginForm
           onLoginFormSubmit={handleLogin}
           isLoggingIn={isUserLoggingIn}
