@@ -1,4 +1,4 @@
-import { Flex, Image } from "@mantine/core";
+import { Button, Flex, Image } from "@mantine/core";
 import { DataTable } from "mantine-datatable";
 
 function EmployeeList(props: any) {
@@ -27,12 +27,39 @@ function EmployeeList(props: any) {
           },
           { accessor: "profession", title: "Profession" },
           { accessor: "location", title: "Location" },
+          { accessor: "connection", title: "Connection" },
+          {
+            accessor: "connection",
+            title: "Options",
+            // @ts-ignore
+            render: ({ connection, inviteeProfileUrn, invitation }) =>
+              connection === "1st degree connection" ? (
+                <h1></h1>
+              ) : (
+                <Button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    props.onSendInviteClick(inviteeProfileUrn);
+                  }}
+                  loading={
+                    inviteeProfileUrn === props.selectedInviteeProfileUrn &&
+                    props.isSendingInvite
+                  }
+                >
+                  {invitation === "PENDING" ? "Pending" : "Send Invite"}
+                </Button>
+              ),
+          },
         ]}
         records={props?.employeesData?.employees}
         page={props?.page}
         onPageChange={props?.onPageChange}
         recordsPerPage={props.employeesData?.pagination?.count}
         totalRecords={props.employeesData?.pagination?.total}
+        // @ts-ignore
+        onRowClick={({ employeeId, navigationURL }) =>
+          props?.onRowClick(employeeId, navigationURL)
+        }
       />
     </>
   );
