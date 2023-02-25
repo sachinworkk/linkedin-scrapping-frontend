@@ -9,10 +9,11 @@ import EmployeeSearchForm from "../homepage/EmployeeSearhForm";
 import { getToken } from "../../utils/localStorage";
 
 import {
-  lazyLoadStatus,
-  searchEmployeeDetail,
-  searchEmployeeList,
   sendInvite,
+  lazyLoadStatus,
+  searchCompanies,
+  searchEmployeeList,
+  searchEmployeeDetail,
 } from "../../services/employeeService";
 import EmployeeDetail from "../homepage/EmployeeDetail";
 
@@ -26,6 +27,9 @@ export interface employeesDataType {
 function HomePage() {
   const [page, setPage] = useState(1);
   const [isOpened, setOpened] = useState(false);
+
+  const [options, setOptions] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
 
   const [isSendingInvite, setIsSendingInvite] = useState(false);
   const [isEmployeeListLoading, setEmployeeListLoading] = useState(false);
@@ -49,6 +53,28 @@ function HomePage() {
   const [lazyLoadedActionUrns, setLazyLoadedActionUrns] = useState([]);
   const [selectedInviteeProfileUrn, setSelectedInviteeProfileUrn] =
     useState("");
+
+  const handleEmployeeListSearch = async (value: any) => {
+    setSearchValue(value);
+
+    // Make API call to retrieve autocomplete options based on search value
+    const response = await searchCompanies({
+      companySearchQueryParam: value,
+      liAt: getToken("linkedInScrappingLiAt"),
+      jSessionId: getToken("linkedInScrappingJSessionId"),
+    });
+    const data = response?.data;
+
+    // Map the response data to an array of option objects
+    const mappedOptions = data?.companies?.map((option: any) => ({
+      label: option?.text?.[1] || "",
+      value: option?.text?.[1] || "",
+      id: option?.trackingUrn || "",
+    }));
+
+    // Set the options in the state
+    setOptions(mappedOptions);
+  };
 
   const onPageChange = (page: number) => {
     setPage(page);
@@ -220,7 +246,12 @@ function HomePage() {
     <>
       <Grid mt={12}>
         <Grid.Col span={2}>
-          <EmployeeSearchForm onEmployeeSearch={handleEmployeeSearch} />
+          <EmployeeSearchForm
+            employees={options}
+            searchValue={searchValue}
+            onEmployeeSearch={handleEmployeeSearch}
+            onEmployeeListSearch={handleEmployeeListSearch}
+          />
         </Grid.Col>
 
         <EmployeeDetail

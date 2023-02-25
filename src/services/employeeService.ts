@@ -12,11 +12,13 @@ export const searchEmployeeDetail = async (
   employeeId: String,
   payload: object
 ) => {
-  console.log("employeeId", employeeId);
-  console.log("payload", payload);
   return http.post(`/scrap/${employeeId}`, payload);
 };
 
 export const sendInvite = async (payload: object) => {
   return http.post("/send-invite", payload);
+};
+
+export const searchCompanies = async (payload: object) => {
+  return http.post("/companies", payload);
 };
