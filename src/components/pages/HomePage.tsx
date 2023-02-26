@@ -3,6 +3,8 @@ import { useState } from "react";
 import { Grid } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 
+import useDebounce from "../../hooks/useDebounce";
+
 import EmployeeList from "../homepage/EmployeeList";
 import EmployeeSearchForm from "../homepage/EmployeeSearhForm";
 
@@ -54,14 +56,10 @@ function HomePage() {
   const [selectedInviteeProfileUrn, setSelectedInviteeProfileUrn] =
     useState("");
 
-  const handleEmployeeListSearch = async (value: any) => {
-    setSearchValue(value);
-
+  const searchCompaniesDebounced = useDebounce(async (value: any) => {
     // Make API call to retrieve autocomplete options based on search value
     const response = await searchCompanies({
       companySearchQueryParam: value,
-      liAt: getToken("linkedInScrappingLiAt"),
-      jSessionId: getToken("linkedInScrappingJSessionId"),
     });
     const data = response?.data;
 
@@ -74,6 +72,12 @@ function HomePage() {
 
     // Set the options in the state
     setOptions(mappedOptions);
+  }, 500);
+
+  const handleEmployeeListSearch = (value: string) => {
+    setSearchValue(value);
+
+    searchCompaniesDebounced(value);
   };
 
   const onPageChange = (page: number) => {
@@ -87,8 +91,6 @@ function HomePage() {
     const payload = {
       ...employeeSearch,
       pageNumber: "0",
-      liAt: getToken("linkedInScrappingLiAt"),
-      jSessionId: getToken("linkedInScrappingJSessionId"),
     };
 
     setEmployeeListLoading(true);
@@ -119,8 +121,6 @@ function HomePage() {
     const payload = {
       ...employeeSearchParams,
       pageNumber,
-      liAt: getToken("linkedInScrappingLiAt"),
-      jSessionId: getToken("linkedInScrappingJSessionId"),
     };
 
     setEmployeeListLoading(true);
@@ -151,8 +151,6 @@ function HomePage() {
   ) => {
     try {
       const resp = await searchEmployeeDetail(employeeId, {
-        liAt: getToken("linkedInScrappingLiAt"),
-        jSessionId: getToken("linkedInScrappingJSessionId"),
         navigationURL,
       });
 
