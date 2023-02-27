@@ -2,14 +2,13 @@ import {
   Text,
   Paper,
   Divider,
-  Select,
   Group,
   Button,
   Stack,
+  TextInput,
+  Autocomplete,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-
-import { ORGANIZATIONS, PROFESSION } from "../../constants/constants";
 
 function EmployeeSearchForm(props: any) {
   const form: any = useForm({
@@ -22,9 +21,9 @@ function EmployeeSearchForm(props: any) {
   return (
     <Paper radius="md" p="xl" withBorder>
       <form
-        onSubmit={form.onSubmit((values: object) =>
-          props.onEmployeeSearch(values)
-        )}
+        onSubmit={form.onSubmit((values: object) => {
+          props.onEmployeeSearch(values);
+        })}
       >
         <Stack spacing="lg">
           <Text size="lg" weight={500}>
@@ -33,7 +32,24 @@ function EmployeeSearchForm(props: any) {
 
           <Divider />
 
-          <Select
+          <Autocomplete
+            label="Search"
+            placeholder="Enter your search query"
+            value={props.searchValue}
+            data={props.employees}
+            onChange={props.onEmployeeListSearch}
+            onItemSubmit={(item) =>
+              form.setFieldValue("organization", item?.id)
+            }
+          />
+
+          <TextInput
+            label="Professions"
+            placeholder="Profession"
+            {...form.getInputProps("profession")}
+          />
+
+          {/* <Select
             label="Organizations"
             placeholder="Organization"
             data={ORGANIZATIONS}
@@ -45,7 +61,7 @@ function EmployeeSearchForm(props: any) {
             placeholder="Profession"
             data={PROFESSION}
             {...form.getInputProps("profession")}
-          />
+          /> */}
         </Stack>
 
         <Group position="apart" mt="xl">
