@@ -13,27 +13,12 @@ interface EmployeeDetailProps {
 
 function EmployeeDetail(props: EmployeeDetailProps) {
   return (
-    <Modal
-      opened={props.isOpened}
-      onClose={() => props.setOpened(false)}
-      title="Contact Info"
-    >
+    <Modal opened={props.isOpened} onClose={() => props.setOpened(false)}>
       <h2>Phone</h2>
       <span>{props.contactNumber}</span>
 
       <h2>Email</h2>
       <span>{props.email}</span>
-
-      {props.connection === "1st degree connection" || (
-        <Button
-          onClick={(e) => {
-            e.stopPropagation();
-            props.onSendInviteClick(props.inviteeProfileUrn);
-          }}
-        >
-          Send Invite
-        </Button>
-      )}
     </Modal>
   );
 }

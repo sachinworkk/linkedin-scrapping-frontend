@@ -1,4 +1,4 @@
-import { Button, Flex, Image } from "@mantine/core";
+import { Badge, Button, Flex, Image } from "@mantine/core";
 import { DataTable } from "mantine-datatable";
 
 function EmployeeList(props: any) {
@@ -35,16 +35,20 @@ function EmployeeList(props: any) {
             render: ({ connection, inviteeProfileUrn, invitation }) =>
               connection === "1st degree connection" ? (
                 <h1></h1>
+              ) : invitation === "PENDING" ? (
+                <Badge color="gray">PENDING</Badge>
               ) : (
                 <Button
                   onClick={(e) => {
                     e.stopPropagation();
+
                     props.onSendInviteClick(inviteeProfileUrn);
                   }}
                   loading={
                     inviteeProfileUrn === props.selectedInviteeProfileUrn &&
                     props.isSendingInvite
                   }
+                  disabled={invitation === "PENDING"}
                 >
                   {invitation === "PENDING" ? "Pending" : "Send Invite"}
                 </Button>
