@@ -8,7 +8,7 @@ import { CONTENT_TYPE_JSON } from "./../constants/misc";
  */
 const getConfig = (contentType: string) => {
   return {
-    baseURL: "http://localhost:5000",
+    baseURL: process.env.REACT_APP_API_URL,
     headers: {
       "Content-Type": contentType,
       Accept: CONTENT_TYPE_JSON,

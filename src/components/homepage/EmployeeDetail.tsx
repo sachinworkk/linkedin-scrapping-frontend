@@ -1,4 +1,3 @@
-import { Button } from "@mantine/core";
 import { Modal } from "@mantine/core";
 
 interface EmployeeDetailProps {
